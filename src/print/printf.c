@@ -46,6 +46,5 @@ void libh5n_printf(const char *format, ...)
     libh5n_vsprintf(buffer, format, args);
     va_end(args);
 
-    printf("%s\n", buffer);
-    printf("\n");
+    printf("%s", buffer);
 }
