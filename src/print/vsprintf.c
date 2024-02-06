@@ -1,5 +1,7 @@
 #include <libh5n/print/vsprintf.h>
 
+#include <libh5n/print/put_value.h>
+
 #include <stdarg.h>
 #include <stdio.h>
 
@@ -31,41 +33,10 @@ void libh5n_vsprintf(char *buffer, const char *format, va_list args)
     *destination = '\0';
 }
 
-void put_char(char **destination, const char source)
-{
-    if (!(*destination))
-    {
-        return;
-    }
-    **destination = source;
-    (*destination)++;
-}
-
-void put_string(char **destination, const char *source)
-{
-    /*
-    for (const char *current_char = source; *current_char != '\0';
-         current_char++)
-    {
-        put_char(destination, *current_char);
-    }
-    */
-    while (*source != '\0')
-    {
-        put_char(destination, *source);
-        source++;
-    }
-}
-
 void process_format(char **buffer, const char **format, va_list args)
 {
     char current_char = **format;
-    format_status status = {
-        .width = 0,
-        .has_zero_pad = false,
-        .has_long_long_modifier = false,
-        .has_long_long_modifier = false,
-    };
+    format_status status = process_format_flag(format, args);
     process_format_specifier(buffer, current_char, &status, args);
 }
 
@@ -129,16 +100,12 @@ void process_format_specifier(
             {
                 char *target_string = va_arg(args, char *);
                 put_string(buffer, target_string);
-                /*
-                for (; *target_string != '0'; target_string++)
-                {
-                    put_char(buffer, *target_string);
-                }
-                */
                 break;
             }
         case 'd' :
             {
+                int target_value = va_arg(args, int);
+                put_int(buffer, target_value, status);
                 break;
             }
 
