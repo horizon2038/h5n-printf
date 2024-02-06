@@ -23,7 +23,8 @@ void libh5n_vsprintf(char *buffer, const char *format, va_list args)
 
     char *destination = buffer;
 
-    for (const char *current_char = format; *current_char != '\0'; current_char++)
+    for (const char *current_char = format; *current_char != '\0';
+         current_char++)
     {
         if (*current_char == '%')
         {
@@ -35,7 +36,11 @@ void libh5n_vsprintf(char *buffer, const char *format, va_list args)
             put_char(&destination, *current_char);
         }
 
-        printf("current_buffer : %c\ncurrent_char : %c\n", *destination, *current_char);
+        printf(
+            "current_buffer : %c\ncurrent_char : %c\n",
+            *destination,
+            *current_char
+        );
     }
     *destination = '\0';
 }
@@ -52,8 +57,9 @@ void process_format(char **buffer, const char **format, va_list args)
     }
     else if (current_char == 's')
     {
-        char *target_string = va_arg(args, char*);
-        for (const char *current_char = target_string; *current_char != '0'; current_char++)
+        char *target_string = va_arg(args, char *);
+        for (const char *current_char = target_string; *current_char != '0';
+             current_char++)
         {
             put_char(buffer, *current_char);
         }
@@ -63,12 +69,32 @@ void process_format(char **buffer, const char **format, va_list args)
         printf("Unsupported format specifier: %c\n", current_char);
     }
 
+    switch (current_char)
+    {
+        case 'c' :
+            {
+                break;
+            }
+        case 'c' :
+            {
+                break;
+            }
+        case 'c' :
+            {
+                break;
+            }
 
+        default :
+            {
+                printf("Unsupported format specifier: %c\n", current_char);
+                break;
+            }
+    }
 }
 
 void put_char(char **destination, const char source)
 {
-    if(!(*destination))
+    if (!(*destination))
     {
         return;
     }

@@ -1,7 +1,7 @@
 #include <libh5n/print.h>
 
-#include <stdio.h>
 #include <stdarg.h>
+#include <stdio.h>
 
 int main(int argc, const char *argv[])
 {
