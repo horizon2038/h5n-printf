@@ -25,7 +25,6 @@ void libh5n_vsprintf(char *buffer, const char *format, va_list args)
 
     for (const char *current_char = format; *current_char != '\0'; current_char++)
     {
-
         if (*current_char == '%')
         {
             current_char++;
