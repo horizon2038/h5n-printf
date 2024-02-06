@@ -1,9 +1,10 @@
-#ifndef H5N_PRINT_H
-#define H5N_PRINT_H
+#ifndef LIBH5N_VSPRINTF_H
+#define LIBH5N_VSPRINTF_H
+
+#include <libh5n/print/format_status.h>
 
 #include <stdarg.h>
 
-void libh5n_printf(const char *format, ...);
 void libh5n_vsprintf(char *buffer, const char *format, va_list args);
 
 void process_format(char **buffer, const char **format, va_list args);
