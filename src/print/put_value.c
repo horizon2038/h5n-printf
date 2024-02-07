@@ -48,6 +48,14 @@ void make_value_width(
     } while (value > 0);
 }
 
+void make_value_pad(char **destination, format_status *status)
+{
+    for (; status->width > 0; status->width--)
+    {
+        put_char(destination, status->has_zero_pad ? '0' : ' ');
+    }
+}
+
 void put_int(char **destination, int value, format_status *status)
 {
     if (value < 0)
@@ -80,12 +88,6 @@ void put_int(char **destination, int value, format_status *status)
     {
         put_char(destination, *pointer++);
     }
-}
-
-void add_sign(char **destination, format_status *status)
-{
-    put_char(destination, '-');
-    --status->width;
 }
 
 void put_int_ll(char **destination, long long value, int width, bool zero_pad)
