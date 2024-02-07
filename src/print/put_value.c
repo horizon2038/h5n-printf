@@ -1,4 +1,6 @@
 #include <libh5n/print/put_value.h>
+#include <stdio.h>
+#include <stdint.h>
 
 void put_char(char **destination, const char source)
 {
@@ -19,15 +21,46 @@ void put_string(char **destination, const char *source)
     }
 }
 
+uintmax_t
+    make_value_sign(char **destination, uintmax_t value, format_status *status)
+{
+    if (value < 0)
+    {
+        put_char(destination, '-');
+        value -= value;
+        --status->width;
+    }
+    return value;
+}
+
+void make_value_width(
+    char **buffer,
+    size_t buffer_size,
+    uintmax_t value,
+    format_status *status
+)
+{
+    do
+    {
+        *(--(*buffer)) = '0' + (value % 10);
+        value /= 10;
+        --status->width;
+    } while (value > 0);
+}
+
 void put_int(char **destination, int value, format_status *status)
 {
     if (value < 0)
     {
         put_char(destination, '-');
-        value = -value;
+        value = -value; // reverse the number signs.
         --status->width;
     }
 
+    // 32-bit value.
+    // log((2^32) - 1) = 9.6239...
+    // = 10.
+    //
     char buffer[10];
     char *pointer = buffer + 10;
 
@@ -47,6 +80,12 @@ void put_int(char **destination, int value, format_status *status)
     {
         put_char(destination, *pointer++);
     }
+}
+
+void add_sign(char **destination, format_status *status)
+{
+    put_char(destination, '-');
+    --status->width;
 }
 
 void put_int_ll(char **destination, long long value, int width, bool zero_pad)

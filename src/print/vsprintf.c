@@ -21,14 +21,6 @@ void libh5n_vsprintf(char *buffer, const char *format, va_list args)
         {
             put_char(&destination, *current_char);
         }
-
-        /*
-        printf(
-            "current_buffer : %c\ncurrent_char : %c\n",
-            *destination,
-            *current_char
-        );
-        */
     }
     *destination = '\0';
 }
